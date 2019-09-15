@@ -16,7 +16,7 @@ namespace WritingAnInterpreterInCSharp.Lexer
         private string input;
         private int position;       // current position in input (points to current char)
         private int readPosition;   // current reading position in input (after current char)
-        private char ch;             // current char under examination
+        private char ch;            // current char under examination
 
         private void readChar()
         {
@@ -29,9 +29,50 @@ namespace WritingAnInterpreterInCSharp.Lexer
             this.readPosition += 1;
         }
 
+        private string readIdentifier()
+        {
+            int curPosition = this.position;
+
+            while (isLetter(this.ch))
+            {
+                this.readChar();
+            }
+
+            return this.input.Substring(curPosition, this.position - curPosition);
+        }
+
+        private bool isLetter(char check)
+        {
+            return ('a' <= check && check <= 'z') || 
+                ('A' <= check && check <= 'Z') || 
+                (check == '_');
+        }
+
+        private string readNumber()
+        {
+            int curPosition = this.position;
+
+            while (Char.IsDigit(this.ch))
+            {
+                this.readChar();
+            }
+
+            return this.input.Substring(curPosition, this.position - curPosition);
+        }
+
+        private void skipWhitespace()
+        {
+            while (this.ch == ' ' || this.ch == '\t' || this.ch == '\n' || this.ch == '\r')
+            {
+                this.readChar();
+            }
+        }
+
         public Token.Token NextToken()
         {
             Token.Token token;
+
+            this.skipWhitespace();
 
             switch (this.ch)
             {
@@ -63,7 +104,16 @@ namespace WritingAnInterpreterInCSharp.Lexer
                     token = new Token.Token(TokenType.EOF, "");
                     break;
                 default:
-                    token = new Token.Token(TokenType.ILLEGAL, ch.ToString());
+                    if (isLetter(this.ch))
+                    {
+                        string literal = this.readIdentifier();
+                        TokenType type = Token.Token.LookupIdent(literal);
+                        return new Token.Token(type, literal);
+                    }
+                    else if (Char.IsDigit(this.ch))
+                        return new Token.Token(TokenType.INT, this.readNumber());
+                    else
+                        token = new Token.Token(TokenType.ILLEGAL, ch.ToString());
                     break;
             }
 

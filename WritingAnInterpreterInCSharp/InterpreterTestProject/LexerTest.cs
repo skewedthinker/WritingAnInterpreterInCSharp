@@ -23,19 +23,55 @@ namespace InterpreterTestProject
         [TestMethod]
         public void TestNextToken()
         {
-            string input = "=+(){},;";
+            string input = @"let five = 5;
+                let ten = 10;
+
+                let add = fn(x, y) {
+                    x + y;
+                };
+
+                let result = add(five, ten);
+                ";
 
             var testArray = new TokenTest[]
             {
+                new TokenTest(TokenType.LET, "let"),
+                new TokenTest(TokenType.IDENT, "five"),
                 new TokenTest(TokenType.ASSIGN, "="),
-                new TokenTest(TokenType.PLUS, "+"),
+                new TokenTest(TokenType.INT, "5"),
+                new TokenTest(TokenType.SEMICOLON, ";"),
+                new TokenTest(TokenType.LET, "let"),
+                new TokenTest(TokenType.IDENT, "ten"),
+                new TokenTest(TokenType.ASSIGN, "="),
+                new TokenTest(TokenType.INT, "10"),
+                new TokenTest(TokenType.SEMICOLON, ";"),
+                new TokenTest(TokenType.LET, "let"),
+                new TokenTest(TokenType.IDENT, "add"),
+                new TokenTest(TokenType.ASSIGN, "="),
+                new TokenTest(TokenType.FUNCTION, "fn"),
                 new TokenTest(TokenType.LPAREN, "("),
+                new TokenTest(TokenType.IDENT, "x"),
+                new TokenTest(TokenType.COMMA, ","),
+                new TokenTest(TokenType.IDENT, "y"),
                 new TokenTest(TokenType.RPAREN, ")"),
                 new TokenTest(TokenType.LBRACE, "{"),
-                new TokenTest(TokenType.RBRACE, "}"),
-                new TokenTest(TokenType.COMMA, ","),
+                new TokenTest(TokenType.IDENT, "x"),
+                new TokenTest(TokenType.PLUS, "+"),
+                new TokenTest(TokenType.IDENT, "y"),
                 new TokenTest(TokenType.SEMICOLON, ";"),
-                new TokenTest(TokenType.EOF, "")
+                new TokenTest(TokenType.RBRACE, "}"),
+                new TokenTest(TokenType.SEMICOLON, ";"),
+                new TokenTest(TokenType.LET, "let"),
+                new TokenTest(TokenType.IDENT, "result"),
+                new TokenTest(TokenType.ASSIGN, "="),
+                new TokenTest(TokenType.IDENT, "add"),
+                new TokenTest(TokenType.LPAREN, "("),
+                new TokenTest(TokenType.IDENT, "five"),
+                new TokenTest(TokenType.COMMA, ","),
+                new TokenTest(TokenType.IDENT, "ten"),
+                new TokenTest(TokenType.RPAREN, ")"),
+                new TokenTest(TokenType.SEMICOLON, ";"),
+                new TokenTest(TokenType.EOF, ""),
             };
 
             Lexer l = new Lexer(input);
