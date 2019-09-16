@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WritingAnInterpreterInCSharp.Token
+namespace WritingAnInterpreterInCSharp.Tokens
 {
     public class Token
     {
@@ -35,6 +35,11 @@ namespace WritingAnInterpreterInCSharp.Token
             }
 
             return TokenType.IDENT;
+        }
+
+        public override string ToString()
+        {
+            return $"{{Type: {this.Type} Literal: {this.Literal}}}";
         }
     }
 }

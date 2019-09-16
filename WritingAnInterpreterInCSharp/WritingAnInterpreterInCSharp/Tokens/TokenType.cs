@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WritingAnInterpreterInCSharp.Token
+namespace WritingAnInterpreterInCSharp.Tokens
 {
-    public class TokenType
+    public class TokenType : IEquatable<TokenType>
     {
         public TokenType(string value) { Value = value; }
 
@@ -65,6 +65,11 @@ namespace WritingAnInterpreterInCSharp.Token
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public bool Equals(TokenType other)
+        {
+            return this.Value.Equals(other.Value);
         }
     }
 }

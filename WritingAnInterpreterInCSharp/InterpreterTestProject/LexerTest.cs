@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WritingAnInterpreterInCSharp.Lexer;
-using WritingAnInterpreterInCSharp.Token;
+using WritingAnInterpreterInCSharp.Tokens;
 
 
 namespace InterpreterTestProject
