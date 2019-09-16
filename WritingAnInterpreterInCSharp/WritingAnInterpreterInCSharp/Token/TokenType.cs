@@ -20,6 +20,16 @@ namespace WritingAnInterpreterInCSharp.Token
         // Operators
         public static TokenType ASSIGN { get { return new TokenType("="); } }
         public static TokenType PLUS { get { return new TokenType("+"); } }
+        public static TokenType MINUS { get { return new TokenType("-"); } }
+        public static TokenType BANG { get { return new TokenType("!"); } }
+        public static TokenType ASTERISK { get { return new TokenType("*"); } }
+        public static TokenType SLASH { get { return new TokenType("/"); } }
+
+        public static TokenType LT { get { return new TokenType("<"); } }
+        public static TokenType GT { get { return new TokenType(">");} }
+
+        public static TokenType EQ { get { return new TokenType("=="); } }
+        public static TokenType NOT_EQ { get { return new TokenType("!="); } }
 
         // Delimeters
         public static TokenType COMMA { get { return new TokenType(","); } }
@@ -33,6 +43,11 @@ namespace WritingAnInterpreterInCSharp.Token
         // Keywords
         public static TokenType FUNCTION { get { return new TokenType("FUNCTION"); } }
         public static TokenType LET { get { return new TokenType("LET"); } }
+        public static TokenType TRUE { get { return new TokenType("TRUE"); } }
+        public static TokenType FALSE { get { return new TokenType("FALSE"); } }
+        public static TokenType IF { get { return new TokenType("IF"); } }
+        public static TokenType ELSE { get { return new TokenType("ELSE"); } }
+        public static TokenType RETURN { get { return new TokenType("RETURN"); } }
 
         public override string ToString()
         {

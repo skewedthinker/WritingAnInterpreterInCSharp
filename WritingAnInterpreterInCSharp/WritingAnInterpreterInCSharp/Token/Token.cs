@@ -19,7 +19,12 @@ namespace WritingAnInterpreterInCSharp.Token
         public static Dictionary<string, TokenType> keywords = new Dictionary<string, TokenType>()
         {
             { "fn", TokenType.FUNCTION },
-            { "let", TokenType.LET }
+            { "let", TokenType.LET },
+            { "true", TokenType.TRUE },
+            { "false", TokenType.FALSE },
+            { "if", TokenType.IF },
+            { "else", TokenType.ELSE },
+            { "return", TokenType.RETURN }
         };
 
         public static TokenType LookupIdent(string ident)

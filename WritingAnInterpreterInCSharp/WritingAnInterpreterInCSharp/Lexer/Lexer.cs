@@ -29,6 +29,14 @@ namespace WritingAnInterpreterInCSharp.Lexer
             this.readPosition += 1;
         }
 
+        private char peekChar()
+        {
+            if (this.readPosition >= this.input.Length)
+                return Char.MinValue;
+            else
+                return this.input[this.readPosition];
+        }
+
         private string readIdentifier()
         {
             int curPosition = this.position;
@@ -43,8 +51,8 @@ namespace WritingAnInterpreterInCSharp.Lexer
 
         private bool isLetter(char check)
         {
-            return ('a' <= check && check <= 'z') || 
-                ('A' <= check && check <= 'Z') || 
+            return ('a' <= check && check <= 'z') ||
+                ('A' <= check && check <= 'Z') ||
                 (check == '_');
         }
 
@@ -77,7 +85,15 @@ namespace WritingAnInterpreterInCSharp.Lexer
             switch (this.ch)
             {
                 case '=':
-                    token = new Token.Token(TokenType.ASSIGN, ch.ToString());
+                    if (this.peekChar() == '=')
+                    {
+                        string literal = this.ch.ToString();
+                        this.readChar();
+                        literal += this.ch.ToString();
+                        token = new Token.Token(TokenType.EQ, literal);
+                    }
+                    else
+                        token = new Token.Token(TokenType.ASSIGN, ch.ToString());
                     break;
                 case ';':
                     token = new Token.Token(TokenType.SEMICOLON, this.ch.ToString());
@@ -93,6 +109,32 @@ namespace WritingAnInterpreterInCSharp.Lexer
                     break;
                 case '+':
                     token = new Token.Token(TokenType.PLUS, this.ch.ToString());
+                    break;
+                case '-':
+                    token = new Token.Token(TokenType.MINUS, this.ch.ToString());
+                    break;
+                case '!':
+                    if (this.peekChar() == '=')
+                    {
+                        string literal = this.ch.ToString();
+                        this.readChar();
+                        literal += this.ch.ToString();
+                        token = new Token.Token(TokenType.NOT_EQ, literal);
+                    }
+                    else
+                        token = new Token.Token(TokenType.BANG, this.ch.ToString());
+                    break;
+                case '/':
+                    token = new Token.Token(TokenType.SLASH, this.ch.ToString());
+                    break;
+                case '*':
+                    token = new Token.Token(TokenType.ASTERISK, this.ch.ToString());
+                    break;
+                case '<':
+                    token = new Token.Token(TokenType.LT, this.ch.ToString());
+                    break;
+                case '>':
+                    token = new Token.Token(TokenType.GT, this.ch.ToString());
                     break;
                 case '{':
                     token = new Token.Token(TokenType.LBRACE, this.ch.ToString());

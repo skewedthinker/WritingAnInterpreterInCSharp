@@ -23,7 +23,7 @@ namespace InterpreterTestProject
         [TestMethod]
         public void TestNextToken()
         {
-            string input = @"let five = 5;
+            const string input = @"let five = 5;
                 let ten = 10;
 
                 let add = fn(x, y) {
@@ -31,6 +31,18 @@ namespace InterpreterTestProject
                 };
 
                 let result = add(five, ten);
+                !-/*5;
+                5 < 10 > 5;
+
+                if (5 < 10) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+                10 == 10;
+                10 != 9;
+
                 ";
 
             var testArray = new TokenTest[]
@@ -70,6 +82,43 @@ namespace InterpreterTestProject
                 new TokenTest(TokenType.COMMA, ","),
                 new TokenTest(TokenType.IDENT, "ten"),
                 new TokenTest(TokenType.RPAREN, ")"),
+                new TokenTest(TokenType.SEMICOLON, ";"),
+                new TokenTest(TokenType.BANG, "!"),
+                new TokenTest(TokenType.MINUS, "-"),
+                new TokenTest(TokenType.SLASH, "/"),
+                new TokenTest(TokenType.ASTERISK, "*"),
+                new TokenTest(TokenType.INT, "5"),
+                new TokenTest(TokenType.SEMICOLON, ";"),
+                new TokenTest(TokenType.INT, "5"),
+                new TokenTest(TokenType.LT, "<"),
+                new TokenTest(TokenType.INT, "10"),
+                new TokenTest(TokenType.GT, ">"),
+                new TokenTest(TokenType.INT, "5"),
+                new TokenTest(TokenType.SEMICOLON, ";"),
+                new TokenTest(TokenType.IF, "if"),
+                new TokenTest(TokenType.LPAREN, "("),
+                new TokenTest(TokenType.INT, "5"),
+                new TokenTest(TokenType.LT, "<"),
+                new TokenTest(TokenType.INT, "10"),
+                new TokenTest(TokenType.RPAREN, ")"),
+                new TokenTest(TokenType.LBRACE, "{"),
+                new TokenTest(TokenType.RETURN, "return"),
+                new TokenTest(TokenType.TRUE, "true"),
+                new TokenTest(TokenType.SEMICOLON, ";"),
+                new TokenTest(TokenType.RBRACE, "}"),
+                new TokenTest(TokenType.ELSE, "else"),
+                new TokenTest(TokenType.LBRACE, "{"),
+                new TokenTest(TokenType.RETURN, "return"),
+                new TokenTest(TokenType.FALSE, "false"),
+                new TokenTest(TokenType.SEMICOLON, ";"),
+                new TokenTest(TokenType.RBRACE, "}"),
+                new TokenTest(TokenType.INT, "10"),
+                new TokenTest(TokenType.EQ, "=="),
+                new TokenTest(TokenType.INT, "10"),
+                new TokenTest(TokenType.SEMICOLON, ";"),
+                new TokenTest(TokenType.INT, "10"),
+                new TokenTest(TokenType.NOT_EQ, "!="),
+                new TokenTest(TokenType.INT, "9"),
                 new TokenTest(TokenType.SEMICOLON, ";"),
                 new TokenTest(TokenType.EOF, ""),
             };
