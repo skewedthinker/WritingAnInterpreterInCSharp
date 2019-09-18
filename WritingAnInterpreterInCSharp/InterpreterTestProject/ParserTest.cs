@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WritingAnInterpreterInCSharp.Lexer;
 using WritingAnInterpreterInCSharp.AST;
+using WritingAnInterpreterInCSharp.Tokens;
 using System;
 using System.Text;
 
@@ -50,6 +51,30 @@ namespace InterpreterTestProject
             {
                 IStatement stmt = program.Statements[i];
                 TestLetStatements(stmt, identifierTests[i].expectedIdentifier);
+            }
+        }
+
+        [TestMethod]
+        public void TestReturnStatements()
+        {
+            string input = @"
+                return 5;
+                return 10;
+                return 993322;
+            ";
+
+            Lexer l = new Lexer(input);
+            Parser p = new Parser(l);
+
+            Program program = p.ParseProgram();
+            checkParserErrors(p);
+
+            Assert.AreEqual(3, program.Statements.Count);
+
+            foreach(IStatement returnStatement in program.Statements)
+            {
+                Assert.IsInstanceOfType(returnStatement, typeof(ReturnStatement));
+                Assert.AreEqual("return", returnStatement.TokenLiteral());
             }
         }
 

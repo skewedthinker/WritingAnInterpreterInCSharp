@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using WritingAnInterpreterInCSharp.Tokens;
 
 namespace WritingAnInterpreterInCSharp.AST
@@ -52,10 +53,11 @@ namespace WritingAnInterpreterInCSharp.AST
         {
             if (this.curToken.Type.Equals(TokenType.LET))
                 return this.parseLetStatement();
+            else if (this.curToken.Type.Equals(TokenType.RETURN))
+                return this.parseReturnStatement();
             else
                 return null;
         }
-
         private LetStatement parseLetStatement()
         {
             LetStatement stmt = new LetStatement(this.curToken);
@@ -69,6 +71,21 @@ namespace WritingAnInterpreterInCSharp.AST
                 return null;
 
             // TODO: We're skipping the expressions until we encounter a semicolon
+            do
+            {
+                this.nextToken();
+            } while (this.curTokenIs(TokenType.SEMICOLON) == false);
+
+            return stmt;
+        }
+
+        private ReturnStatement parseReturnStatement()
+        {
+            ReturnStatement stmt = new ReturnStatement(this.curToken);
+
+            this.nextToken();
+
+            // TODO: Skipping the expressions until we encounter a semicolon
             do
             {
                 this.nextToken();
