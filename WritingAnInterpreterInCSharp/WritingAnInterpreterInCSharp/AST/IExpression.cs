@@ -1,6 +1,6 @@
 ﻿namespace WritingAnInterpreterInCSharp.AST
 {
-    interface IExpression : INode
+    public interface IExpression : INode
     {
         void expressionNode();
     }

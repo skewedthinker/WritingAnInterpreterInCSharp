@@ -1,4 +1,5 @@
-﻿using WritingAnInterpreterInCSharp.Tokens;
+﻿using System.Text;
+using WritingAnInterpreterInCSharp.Tokens;
 
 namespace WritingAnInterpreterInCSharp.AST
 {
@@ -6,7 +7,7 @@ namespace WritingAnInterpreterInCSharp.AST
     {
         Token Token;
         public Identifier Name;
-        IExpression Value;
+        public IExpression Value;
 
         public LetStatement(Token curToken)
         {
@@ -21,6 +22,24 @@ namespace WritingAnInterpreterInCSharp.AST
         public string TokenLiteral()
         {
             return this.Token.Literal;
+        }
+
+        public string OutputString()
+        {
+            var output = new StringBuilder();
+
+            output.Append(this.TokenLiteral() + " ");
+
+            output.Append(this.Name.OutputString());
+
+            output.Append(" = ");
+
+            if (this.Value != null)
+                output.Append(this.Value.OutputString());
+
+            output.Append(";");
+
+            return output.ToString();
         }
     }
 }

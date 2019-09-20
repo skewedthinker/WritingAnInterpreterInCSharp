@@ -21,5 +21,10 @@ namespace WritingAnInterpreterInCSharp.AST
         {
             return this.Token.Literal;
         }
+
+        public string OutputString()
+        {
+            return Value;
+        }
     }
 }

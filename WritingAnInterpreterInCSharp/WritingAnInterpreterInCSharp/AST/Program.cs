@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace WritingAnInterpreterInCSharp.AST
 {
-    public class Program
+    public class Program : INode
     {
         public IList<IStatement> Statements;
 
@@ -12,6 +13,16 @@ namespace WritingAnInterpreterInCSharp.AST
                 return this.Statements[0].TokenLiteral();
             else
                 return string.Empty;
+        }
+
+        public string OutputString()
+        {
+            var output = new StringBuilder();
+
+            foreach (IStatement statement in this.Statements)
+                output.Append(statement.OutputString());
+
+            return output.ToString();
         }
     }
 }
